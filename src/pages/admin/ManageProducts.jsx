@@ -6,16 +6,14 @@ import Swal from 'sweetalert2';
 import { deleteProduct } from '../../api/api';
 import { removeProduct } from '../../redux/productSlice';
 
-
 const ManageProducts = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const products = useSelector((state) => state.products.products);
-    // console.log(products);
+
     const handledeleteproduct = async (e, id) => {
         e.stopPropagation();
         try {
-            // console.log("Deleting product with ID:", id);
             await deleteProduct(id);
             dispatch(removeProduct(id)); // Remove the product from Redux store
 
@@ -40,7 +38,7 @@ const ManageProducts = () => {
     };
 
     return (
-        <div className='main col-span-9 flex-1'>
+        <div className='flex-1 p-4'>
             <div className='flex justify-between items-center p-3'>
                 <h2 className='font-bold text-green-900'>Manage Products</h2>
                 <button
@@ -51,25 +49,27 @@ const ManageProducts = () => {
                 </button>
             </div>
 
-            <div className='overflow-x-auto'>
-                <table className='w-full divide-y divide-green-200 bg-green-200'>
+            {/* Table container with responsive scrolling */}
+            <div className='w-full overflow-x-auto'>
+                <table className='min-w-full table-auto divide-y divide-green-200 bg-green-200'>
                     {/* Table Head */}
                     <thead className='bg-green-300 text-gray-800 font-bold'>
                         <tr>
                             <th className='px-4 py-2'>#</th>
-                            <th scope="col" className='px-4 py-2 text-left font-bold text-green-800 tracking-wider'>Title</th>
-                            <th scope="col" className='px-4 py-2 text-left font-bold text-green-800 tracking-wider'>Price</th>
-                            <th scope="col" className='px-4 py-2 text-left font-bold text-green-800 tracking-wider'>Stock</th>
-                            <th scope="col" className='px-4 py-2 text-left font-bold text-green-800 tracking-wider'>Actions</th>
+                            <th className='px-4 py-2 text-left font-bold text-green-800'>Title</th>
+                            <th className='px-4 py-2 text-left font-bold text-green-800'>Price</th>
+                            <th className='px-4 py-2 text-left font-bold text-green-800'>Stock</th>
+                            <th className='px-4 py-2 text-left font-bold text-green-800'>Actions</th>
                         </tr>
                     </thead>
 
+                    {/* Table Body */}
                     <tbody className='bg-green-50 divide-y divide-gray-300'>
                         {products.map((product, index) => (
                             <tr
                                 className='cursor-pointer text-green-800 font-semibold hover:bg-green-100 transition-colors'
                                 key={product._id}
-                                onClick={() => navigate(`/products/${product._id}`)}
+                                onClick={() => navigate(`/product/${product._id}`)}
                             >
                                 <th className='px-4 py-2'>{index + 1}</th>
                                 <td className='px-4 py-2'>
@@ -87,19 +87,15 @@ const ManageProducts = () => {
                                     </div>
                                 </td>
 
-                                <td className='px-4 py-2'>
-                                    {product.price}
-                                </td>
-
-                                <td className='px-4 py-2'>
-                                    {product.stock}
-                                </td>
-
+                                <td className='px-4 py-2'>{product.price}</td>
+                                <td className='px-4 py-2'>{product.stock}</td>
                                 <td className='px-4 py-2 flex justify-start items-center gap-6'>
-                                    <span onClick={(e) => {
-                                        e.stopPropagation();
-                                        navigate(`/admin/editProduct/${product._id}`)
-                                    }}>
+                                    <span
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(`/admin/editProduct/${product._id}`);
+                                        }}
+                                    >
                                         <FaEdit className='text-gray-900' size={26} />
                                     </span>
 

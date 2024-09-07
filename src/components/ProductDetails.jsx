@@ -291,7 +291,8 @@ const ProductDetails = () => {
         if (product) {
             const userId = JSON.parse(localStorage.getItem('user'))?._id;
             const sessionId = localStorage.getItem('sessionId');
-
+    
+            // Define the cart item with a quantity of 1 for new additions
             const cartItem = { 
                 productId: product._id,
                 title: product.title,
@@ -299,9 +300,10 @@ const ProductDetails = () => {
                 quantity: 1,
                 image: product.imageUrl
             };
-
+    
+            // Dispatch the addToCart action
             dispatch(addToCart(cartItem));
-
+    
             try {
                 await saveCartToDB({ userId, sessionId, items: [cartItem] });
                 Swal.fire({
@@ -324,7 +326,8 @@ const ProductDetails = () => {
             }
         }
     };
-
+    
+    
     if (!product) return <div>Loading...</div>;
 
     return (

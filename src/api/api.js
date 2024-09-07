@@ -82,15 +82,16 @@ export const updateProduct = async (productId, updatedProduct) => {
 
 
 // save items to the cart
-export const saveCartToDB = async (cartData) => {
+export const saveCartToDB = async ({ userId, sessionId, items }) => {
     try {
-        const response = await axios.post('http://localhost:5000/api/cart', cartData);
+        const response = await axios.post('http://localhost:5000/api/cart', { userId, sessionId, items });
         return response.data;
     } catch (error) {
         console.error('Error saving cart to database:', error.response ? error.response.data : error.message);
-        throw error; // Re-throw the error to be handled by the calling function
+        throw error;
     }
 };
+
 
 
 
@@ -135,3 +136,20 @@ export const deleteCartItemFromDB = async (cartItemId, { userId, sessionId }) =>
         throw error;
     }
 };
+
+
+// Quantity function
+export const updateCartItemQuantity = async (cartItemId, quantity, { userId, sessionId }) => {
+    try {
+        const response = await axios.put(
+            `http://localhost:5000/api/cart/${cartItemId}/quantity`,
+            { quantity },
+            { params: { userId, sessionId } }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('Error updating quantity:', error);
+        throw error;
+    }
+};
+

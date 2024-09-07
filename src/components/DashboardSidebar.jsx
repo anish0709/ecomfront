@@ -17,6 +17,7 @@ const DashboardSidebar = ({ onNavigate }) => {
 
     return (
         <div className='relative'>
+            {/* Toggle button for small screens */}
             <button
                 className={`md:hidden block absolute ${isSidebarOpen ? "top-6" : "top-1"} left-4 z-50 bg-green-900 text-white rounded-md p-2`}
                 onClick={toggleSidebar}
@@ -25,8 +26,9 @@ const DashboardSidebar = ({ onNavigate }) => {
                 {isSidebarOpen ? <FaTimes /> : <FaBars />}
             </button>
 
-            <div className={`fixed inset-y-0 left-0 md:relative w-64 bg-gray-800 text-white
-                transition-transform duration-300 ease-in-out transform ${isSidebarOpen ? "translate-x-0" : "translate-x-full"}`}>
+            {/* Sidebar */}
+            <div className={`fixed inset-y-0 left-0 md:relative md:translate-x-0 w-64 bg-gray-800 text-white
+                transition-transform duration-300 ease-in-out transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:block`}>
                 <div className='bg-green-700 text-white flex flex-col h-screen p-4'>
                     <div className='flex items-center justify-center h-20'>
                         <h1 className='text-2xl font-bold'>Admin Dashboard</h1>
